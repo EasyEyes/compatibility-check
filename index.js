@@ -63,14 +63,14 @@ class ExperimentPeer extends P {
     onPeerOpen(id) {
         console.log("this.peer in onPeerOpen", this.peer);
         // Workaround for peer.reconnect deleting previous id
-        if (this.peer.id === null) {
+        if (id === null) {
             console.log("Received null id from peer open"); // DEBUG
-            this.peer.id = this.lastPeerId;
+            this.peerId = this.lastPeerId;
         } else {
-            this.lastPeerId = this.peer.id;
+            this.lastPeerId = id;
         }
 
-        const params = { peerID: this.peer.id, };
+        const params = { peerID: this.peerId, };
 
         let queryString = this.queryStringFromObject(params);
         const uri = this.compatabilityCheckEndpointURL + queryString;
@@ -80,7 +80,7 @@ class ExperimentPeer extends P {
         const qrCanvas = document.createElement("canvas");
 
         QRCode.toCanvas(qrCanvas, uri, function (error) {
-            if (error) console.error(error);
+            if (error) console.error("Error in QRCode.toCanvas", error);
         });
 
         // Store encoding of QR code, eg to use as an image source
