@@ -37,7 +37,7 @@ class P {
     };
 }
 
-export class ExperimentPeer extends P {
+class ExperimentPeer extends P {
     // EasyEyes-side customizable additional behavior for various events
     constructor({onOpen, onData, onHandshake, onConnection, onClose, onError}){
         super();
@@ -134,7 +134,7 @@ export class ExperimentPeer extends P {
     }
 }
 
-export class PhonePeer extends P{
+class PhonePeer extends P{
     constructor(){
         super();
 
