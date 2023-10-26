@@ -7,6 +7,7 @@ class P {
     
         /* Create the Peer object for our end of the connection. */
         this.peer = new Peer(null, { debug: 2 });
+        console.log("this.peer in super", this.peer);
     
         // In case we need a pop of sound
         this.keypressFeedbackSound =
@@ -38,6 +39,7 @@ class ExperimentPeer extends P {
     // EasyEyes-side customizable additional behavior for various events
     constructor({onOpen, onData, onHandshake, onConnection, onClose, onError}){
         super();
+        console.log("This peer in ExperimentPeer constructor", this.peer);
         this.onOpen = (id) => {this.onPeerOpen(id); onOpen?.(id)};
         this.onData = (data) => {console.log("DATA", data); onData?.(data)};
         // Once we've received our first message from the phone
@@ -155,7 +157,6 @@ class ExperimentPeer extends P {
 class PhonePeer extends P{
     constructor(){
         super();
-        console.log("This peer", this.peer);
 
         this.startTime = Date.now();
       
