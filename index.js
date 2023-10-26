@@ -88,6 +88,25 @@ class ExperimentPeer extends P {
 
         console.log("Peer reachable at: ", this.qrURL);
     };
+    async getQRCodeElem() {
+        const waitALittle = async (time = 250) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                resolve();
+                }, time);
+            })}
+        const qrImage = new Image();
+        qrImage.setAttribute("id", "compatibilityCheckQRImage");
+        qrImage.style.zIndex = Infinity;
+        qrImage.style.minWidth = 500;
+        qrImage.style.minHeight = 500;
+        qrImage.style.aspectRatio = 1;
+        while (!this.qrURI) {
+            await waitALittle(10);
+        }
+        qrImage.src = this.qrURI;
+        return qrImage;
+    }
     onPeerConnection(connection) {
         // Allow only a single connection
         if (this.conn && this.conn.open) {
@@ -137,6 +156,7 @@ class ExperimentPeer extends P {
 class PhonePeer extends P{
     constructor(){
         super();
+        console.log("This peer", this.peer);
 
         this.startTime = Date.now();
       
@@ -153,7 +173,7 @@ class PhonePeer extends P{
     }
     doStuff() { 
         /* TODO whatever JS checks denis wants */ 
-        let resultsFromRunningThoseCompatibilityChecks;
+        let resultsFromRunningThoseCompatibilityChecks = {example: "foo", bar: ["baz", "ba", "b"]};
         this.conn.send({message:"Results", results: resultsFromRunningThoseCompatibilityChecks}) 
         // NOTE: you might have to play around w format of results? Like might have to stringify on this end and JSONify on the computer end. Not sure if will be required.
     }
