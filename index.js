@@ -94,7 +94,7 @@ class ExperimentPeer extends P {
                 resolve();
                 }, time);
             })}
-        const qrImage = new Image();
+        const qrImage = document.createElement("img");
         qrImage.setAttribute("id", "compatibilityCheckQRImage");
         qrImage.style.zIndex = Infinity;
         qrImage.style.minWidth = 500;
@@ -105,7 +105,7 @@ class ExperimentPeer extends P {
         }
         qrImage.src = this.qrURI;
         console.log("qrImage", qrImage);
-        return qrImage;
+        return resolve(qrImage);
     }
     onPeerConnection = (connection) => {
         // Allow only a single connection
