@@ -59,6 +59,7 @@ class ExperimentPeer extends P {
         this.peer.on("error", this.onError);
       }
     onPeerOpen(id) {
+        console.log("this.peer in onPeerOpen", this.peer);
         // Workaround for peer.reconnect deleting previous id
         if (this.peer.id === null) {
             console.log("Received null id from peer open"); // DEBUG
