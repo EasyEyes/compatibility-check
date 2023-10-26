@@ -63,7 +63,7 @@ class ExperimentPeer extends P {
       }
     onPeerOpen(id) {
         // Workaround for peer.reconnect deleting previous id
-        if (this.id === null) {
+        if (this.peer.id === null) {
             console.log("Received null id from peer open"); // DEBUG
             this.peer.id = this.lastPeerId;
         } else {
@@ -208,7 +208,7 @@ class PhonePeer extends P{
     };
     #initiateHandshake() { this.conn.send({ message: "Handshake" }); };
     #showConnectingMessage(){ document.body.innerHTML = "<h1>Connecting...</h1>"; }
-    #onPeerOpen(){
+    #onPeerOpen(id){
         // Workaround for peer.reconnect deleting previous id
         if (this.peer.id === null) {
             console.log("Received null id from peer open");
