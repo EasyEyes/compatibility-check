@@ -1,0 +1,26 @@
+- peerjs 2 way communication
+    tester (experiment computer) and tested (phone)
+
+- github pages endpoint will define both, and instantiate the testpad. 
+    this hosted endpoint will run on the phone,
+    and export a class to be run on the experiment
+
+
+Tester (computer) class
+    - peerjs peer that will 
+        - initiate commmunication (ie generate a url to be embedded as qr code)
+        - block until `results` message
+
+
+Tested (phone) class
+    - will open on page load
+    - will expect peerID in url params
+    - will run code that is hardcoded in the class (ie some js queries that the sound-calibration team will provide)
+    - will wait until said code is done
+    - will send back the results to that code (ie to computer)
+    - will close page
+
+Index.html
+    - will export the tester class
+    - will embody the tested class
+    - analagous to keypad.html in virtual-keypad
