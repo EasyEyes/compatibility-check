@@ -1,6 +1,7 @@
 class P {
     constructor() {
-        this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
+        // this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
+        this.compatabilityCheckEndpointURL = "https://easyeyes.github.io/compatibility-check/";
         this.conn = null;
         this.lastPeerId = null;
     
