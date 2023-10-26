@@ -27,9 +27,6 @@ class P {
     onPeerError = (err) => {
         alert("" + err);
     };
-    parseParams = (params) => {
-        this.peerId = params.get("peerID");
-    };
     queryStringFromObject = (params) => {
     return Object.keys(params)
         .map((key) => key + "=" + encodeURIComponent(params[key]))
@@ -95,7 +92,7 @@ class ExperimentPeer extends P {
                 resolve();
                 }, time);
             })}
-        const qrImage = new Image();
+        const qrImage = document.createElement("img");
         qrImage.setAttribute("id", "compatibilityCheckQRImage");
         qrImage.style.zIndex = Infinity;
         qrImage.style.minWidth = 500;
@@ -105,6 +102,7 @@ class ExperimentPeer extends P {
             await waitALittle(10);
         }
         qrImage.src = this.qrURI;
+        console.log("qrImage", qrImage);
         return qrImage;
     }
     onPeerConnection(connection) {
