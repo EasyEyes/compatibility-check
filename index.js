@@ -1,3 +1,4 @@
+import { QRCode } from "./qrcode";
 class P {
     constructor() {
         // this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
