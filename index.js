@@ -1,7 +1,7 @@
 class P {
     constructor() {
         // this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
-        this.compatabilityCheckEndpointURL = "https://easyeyes.github.io/compatibility-check/";
+        this.compatabilityCheckEndpointURL = "https://easyeyes.github.io/compatibility-check/index.html?";
         this.conn = null;
         this.lastPeerId = null;
     
@@ -94,7 +94,7 @@ class ExperimentPeer extends P {
                 resolve();
                 }, time);
             })}
-        const qrImage = document.createElement("img");
+        const qrImage = new Image();
         qrImage.setAttribute("id", "compatibilityCheckQRImage");
         qrImage.style.zIndex = Infinity;
         qrImage.style.minWidth = 500;
