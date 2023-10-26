@@ -69,7 +69,7 @@ class ExperimentPeer extends P {
             this.lastPeerId = this.peer.id;
         }
 
-        const params = { peerID: this.peerId, };
+        const params = { peerID: this.peer.id, };
 
         let queryString = this.queryStringFromObject(params);
         const uri = this.compatabilityCheckEndpointURL + queryString;
