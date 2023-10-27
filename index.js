@@ -62,8 +62,8 @@ class ExperimentPeer extends P {
     this.onHandshake = () => {
       console.log("HANDSHAKE complete.");
       // Tell the phone to initiate running the payload code
-      this.conn.send({ message: "Begin" });
       this.conn.send({ message: "Text", text: this.text });
+      this.conn.send({ message: "Begin" });
       onHandshake?.();
     };
     // Set this.conn, our connection with the phone peer
