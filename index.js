@@ -38,9 +38,18 @@ class P {
 
 class ExperimentPeer extends P {
   // EasyEyes-side customizable additional behavior for various events
-  constructor({ onOpen, onData, onHandshake, onConnection, onClose, onError }) {
+  constructor({
+    onOpen,
+    onData,
+    onHandshake,
+    onConnection,
+    onClose,
+    onError,
+    text,
+  }) {
     super();
     console.log("This peer in ExperimentPeer constructor", this.peer);
+    this.text = text;
     this.onOpen = (id) => {
       this.onPeerOpen(id);
       onOpen?.(id);
@@ -54,6 +63,7 @@ class ExperimentPeer extends P {
       console.log("HANDSHAKE complete.");
       // Tell the phone to initiate running the payload code
       this.conn.send({ message: "Begin" });
+      this.conn.send({ message: "Text", text: this.text });
       onHandshake?.();
     };
     // Set this.conn, our connection with the phone peer
@@ -220,7 +230,7 @@ class PhonePeer extends P {
     super();
 
     this.startTime = Date.now();
-
+    this.text = "Connecting...";
     // Get the ID for the computer peer, to which we will connect
     this.receiverPeerId = new URLSearchParams(window.location.search).get(
       "peerID"
@@ -292,6 +302,8 @@ class PhonePeer extends P {
       case "Begin":
         this.doStuff();
         break;
+      case "Text":
+        this.text = data.text;
       default:
         console.log("Message type: ", data.message);
     }
@@ -300,7 +312,7 @@ class PhonePeer extends P {
     this.conn.send({ message: "Handshake" });
   };
   #showConnectingMessage = () => {
-    document.body.innerHTML = "<h1>Connecting...</h1>";
+    document.body.innerHTML = `<h1>${this.text}</h1>`;
   };
   #onPeerOpen = (id) => {
     // Workaround for peer.reconnect deleting previous id
