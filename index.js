@@ -275,6 +275,7 @@ class PhonePeer extends P {
       message: "Results",
       results: resultsFromRunningThoseCompatibilityChecks,
     });
+    this.#showConnectingMessage();
     // NOTE: you might have to play around w format of results? Like might have to stringify on this end and JSONify on the computer end. Not sure if will be required.
   };
 
