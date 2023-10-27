@@ -256,8 +256,8 @@ class PhonePeer extends P {
       return null;
     }
   };
-  doStuff = () => {
-    const deviceDetails = this.identifyDevice();
+  doStuff = async () => {
+    const deviceDetails = await this.identifyDevice();
     let resultsFromRunningThoseCompatibilityChecks = {
       deviceDetails: deviceDetails,
     };
