@@ -304,6 +304,7 @@ class PhonePeer extends P {
         break;
       case "Text":
         this.text = data.text;
+        break;
       default:
         console.log("Message type: ", data.message);
     }
