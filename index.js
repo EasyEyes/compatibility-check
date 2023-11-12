@@ -269,23 +269,6 @@ class PhonePeer extends P {
   doStuff = async () => {
     const deviceDetails = await this.identifyDevice();
     const webAudioDeviceNames = { microphone: "" };
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      if (stream) {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        console.log("devices", devices);
-        const mics = devices.filter((device) => device.kind === "audioinput");
-        console.log("mics", mics);
-        mics.forEach((mic) => {
-          if (mic.label.includes("Default")) {
-            webAudioDeviceNames.microphone = mic.label;
-            console.log("webAudioDeviceNames", webAudioDeviceNames.microphone);
-          }
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
     let resultsFromRunningThoseCompatibilityChecks = {
       deviceDetails: deviceDetails,
       webAudioDeviceNames: webAudioDeviceNames,
