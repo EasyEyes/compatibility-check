@@ -288,6 +288,7 @@ class PhonePeer extends P {
     }
     let resultsFromRunningThoseCompatibilityChecks = {
       deviceDetails: deviceDetails,
+      webAudioDeviceNames: webAudioDeviceNames,
     };
     this.conn.send({
       message: "Results",
