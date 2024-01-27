@@ -269,9 +269,14 @@ class PhonePeer extends P {
   doStuff = async () => {
     const deviceDetails = await this.identifyDevice();
     const webAudioDeviceNames = { microphone: "" };
+    const screenSizes = {
+      width: screen.width,
+      height: screen.height,
+    };
     let resultsFromRunningThoseCompatibilityChecks = {
       deviceDetails: deviceDetails,
       webAudioDeviceNames: webAudioDeviceNames,
+      screenSizes: screenSizes,
     };
     this.conn.send({
       message: "Results",
