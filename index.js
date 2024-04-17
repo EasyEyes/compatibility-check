@@ -219,7 +219,7 @@ class ExperimentPeer extends P {
     // });
     this.conn.on("close", () => {
       this.onClose();
-      this.displayUpdate("Connection reset. Awaiting connection...");
+      // this.displayUpdate("Connection reset. Awaiting connection...");
       this.conn = null;
     });
   };
