@@ -18,16 +18,16 @@ class P {
   onPeerDisconnected = () => {
     console.log("Connection lost. Please refresh to try reconnecting.");
     // Workaround for peer.reconnect deleting previous id
-    this.peer.id = this.lastPeerId;
-    this.peer._lastServerId = this.lastPeerId;
-    this.peer.reconnect();
+    // this.peer.id = this.lastPeerId;
+    // this.peer._lastServerId = this.lastPeerId;
+    // this.peer.reconnect();
   };
   onPeerClose = () => {
     console.log("Connection closed");
     this.conn = null;
   };
   onPeerError = (err) => {
-    alert("" + err);
+    // alert("" + err);
   };
   queryStringFromObject = (params) => {
     return Object.keys(params)
