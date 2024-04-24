@@ -8,17 +8,14 @@ class P {
 
     /* Create the Peer object for our end of the connection. */
     this.peer = new Peer(null, {
-      secure: true,
-      host: "easyeyes-peer-server.herokuapp.com",
-      port: 443,
       debug: 2,
       config: {
         iceServers: [
-          { urls: "stun:stun.l.google.com:19302" },
+          { url: "stun:stun.l.google.com:19302" },
           {
-            urls: "turn:0.peerjs.com:3478",
-            username: "peerjs",
-            credential: "peerjsp",
+            url: "turn:turn.bistri.com:80",
+            credential: "homeo",
+            username: "homeo",
           },
         ],
       },
