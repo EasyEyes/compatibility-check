@@ -9,16 +9,6 @@ class P {
     /* Create the Peer object for our end of the connection. */
     this.peer = new Peer(null, {
       debug: 2,
-      config: {
-        iceServers: [
-          { urls: "stun:stun.l.google.com:19302" },
-          {
-            urls: "turn:turn.bistri.com:80",
-            credential: "homeo",
-            username: "homeo",
-          },
-        ],
-      },
     });
     console.log("this.peer in super", this.peer);
 
