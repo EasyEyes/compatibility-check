@@ -12,6 +12,16 @@ class P {
       host: "easyeyes-peer-server.herokuapp.com",
       port: 443,
       debug: 2,
+      config: {
+        iceServers: [
+          { urls: "stun:stun.l.google.com:19302" },
+          {
+            urls: "turn:0.peerjs.com:3478",
+            username: "peerjs",
+            credential: "peerjsp",
+          },
+        ],
+      },
     });
     console.log("this.peer in super", this.peer);
 
