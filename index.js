@@ -7,7 +7,12 @@ class P {
     this.lastPeerId = null;
 
     /* Create the Peer object for our end of the connection. */
-    this.peer = new Peer(null, { debug: 2 });
+    this.peer = new Peer(null, {
+      secure: true,
+      host: "easyeyes-peer-server.herokuapp.com",
+      port: 443,
+      debug: 2,
+    });
     console.log("this.peer in super", this.peer);
 
     // In case we need a pop of sound
