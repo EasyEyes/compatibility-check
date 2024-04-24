@@ -226,7 +226,7 @@ class ExperimentPeer extends P {
 }
 
 class PhonePeer extends P {
-  constructor() {
+  constructor({ onError }) {
     super();
 
     this.startTime = Date.now();
@@ -240,9 +240,14 @@ class PhonePeer extends P {
     this.peer.on("connection", this.#disallowIncomingConnections);
     this.peer.on("disconnected", this.onPeerDisconnected);
     this.peer.on("close", this.onPeerClose);
-    this.peer.on("error", this.onPeerError);
+    this.peer.on("error", this.onError);
 
     this.#showConnectingMessage();
+
+    this.onError = (err) => {
+      this.onPeerError(err);
+      onError?.(err);
+    };
   }
   identifyDevice = async () => {
     try {
