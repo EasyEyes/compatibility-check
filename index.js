@@ -125,6 +125,11 @@ class ExperimentPeer extends P {
 
     console.log("Peer reachable at: ", this.qrURL);
   };
+
+  getQRLink = async () => {
+    return this.qrURL;
+  };
+
   getQRCodeElem = async () => {
     const waitALittle = async (time = 250) => {
       return new Promise((resolve) => {
