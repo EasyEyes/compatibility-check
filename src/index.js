@@ -1,3 +1,4 @@
+import Peer from "peerjs";
 class P {
   constructor() {
     // this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
@@ -47,7 +48,7 @@ class P {
   };
 }
 
-class ExperimentPeer extends P {
+export class ExperimentPeer extends P {
   // EasyEyes-side customizable additional behavior for various events
   constructor({
     onOpen,
@@ -241,7 +242,7 @@ class ExperimentPeer extends P {
   };
 }
 
-class PhonePeer extends P {
+export class PhonePeer extends P {
   constructor({ onError }) {
     super();
 
@@ -249,8 +250,9 @@ class PhonePeer extends P {
     this.text = "Connecting...";
     // Get the ID for the computer peer, to which we will connect
     this.receiverPeerId = new URLSearchParams(window.location.search).get(
-      "peerID"
+      "peer"
     );
+    console.log("receiverPeerId", this.receiverPeerId);
 
     this.peer.on("open", this.#onPeerOpen);
     this.peer.on("connection", this.#disallowIncomingConnections);
@@ -258,13 +260,17 @@ class PhonePeer extends P {
     this.peer.on("close", this.onPeerClose);
     this.peer.on("error", this.onError);
 
-    this.#showConnectingMessage();
+    this.onErrorInput = onError;
 
-    this.onError = (err) => {
-      this.onPeerError(err);
-      onError?.(err);
-    };
+    this.#showConnectingMessage();
   }
+
+  onError = (err) => {
+    this.onPeerError(err);
+    // onError?.(err);
+    this.onErrorInput?.(err);
+  };
+
   identifyDevice = async () => {
     try {
       const deviceInfo = {};
