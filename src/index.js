@@ -94,45 +94,47 @@ export class ExperimentPeer extends P {
     onError,
     text,
   }) {
-    super();
-    console.log("This peer in ExperimentPeer constructor", this.peer);
-    this.text = text;
-    this.onOpen = (id) => {
-      this.onPeerOpen(id);
-      onOpen?.(id);
-    };
-    this.onData = (data) => {
-      console.log("DATA", data);
-      onData?.(data);
-    };
-    // Once we've received our first message from the phone
-    this.onHandshake = () => {
-      console.log("HANDSHAKE complete.");
-      // Tell the phone to initiate running the payload code
-      this.conn.send({ message: "Text", text: this.text });
-      this.conn.send({ message: "Begin" });
-      onHandshake?.();
-    };
-    // Set this.conn, our connection with the phone peer
-    this.onConnection = (connection) => {
-      this.onPeerConnection(connection);
-      onConnection?.(connection);
-    };
-    this.onClose = () => {
-      this.onPeerClose();
-      onClose?.();
-    };
-    this.onError = (err) => {
-      this.onPeerError(err);
-      onError?.(err);
-    };
+    return Promise.resolve(super()).then((n) => {
+      console.log("This peer in ExperimentPeer constructor", this.peer);
+      this.text = text;
+      this.onOpen = (id) => {
+        this.onPeerOpen(id);
+        onOpen?.(id);
+      };
+      this.onData = (data) => {
+        console.log("DATA", data);
+        onData?.(data);
+      };
+      // Once we've received our first message from the phone
+      this.onHandshake = () => {
+        console.log("HANDSHAKE complete.");
+        // Tell the phone to initiate running the payload code
+        this.conn.send({ message: "Text", text: this.text });
+        this.conn.send({ message: "Begin" });
+        onHandshake?.();
+      };
+      // Set this.conn, our connection with the phone peer
+      this.onConnection = (connection) => {
+        this.onPeerConnection(connection);
+        onConnection?.(connection);
+      };
+      this.onClose = () => {
+        this.onPeerClose();
+        onClose?.();
+      };
+      this.onError = (err) => {
+        this.onPeerError(err);
+        onError?.(err);
+      };
 
-    /* Set up callbacks that handle any events related to our peer object. */
-    this.peer.on("open", this.onPeerOpen); // On creation of Experiment (local) Peer object
-    this.peer.on("connection", this.onConnection); // On connection with Phone (remote) Peer object
-    this.peer.on("disconnected", this.onPeerDisconnected);
-    this.peer.on("close", this.onClose);
-    this.peer.on("error", this.onError);
+      /* Set up callbacks that handle any events related to our peer object. */
+      this.peer.on("open", this.onPeerOpen); // On creation of Experiment (local) Peer object
+      this.peer.on("connection", this.onConnection); // On connection with Phone (remote) Peer object
+      this.peer.on("disconnected", this.onPeerDisconnected);
+      this.peer.on("close", this.onClose);
+      this.peer.on("error", this.onError);
+      return this;
+    });
   }
   onPeerOpen = (id) => {
     // Workaround for peer.reconnect deleting previous id
