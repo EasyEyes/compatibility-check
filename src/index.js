@@ -7,20 +7,21 @@ class P {
     this.lastPeerId = null;
 
     /* Create the Peer object for our end of the connection. */
-    const id = Promise.resolve(this.generateTimeBasedPeerID());
-    this.peer = new Peer(id, {
-      debug: 2,
-      config: {
-        iceServers: [
-          {
-            urls: "turn:relay1.expressturn.com:3478",
-            credential: "GaXEw5Xsbyz6NVmY",
-            username: "ef4JRLGBMUMREQ4FTQ",
-          },
-        ],
-      },
+    Promise.resolve(this.generateTimeBasedPeerID()).then((id) => {
+      this.peer = new Peer(id, {
+        debug: 2,
+        config: {
+          iceServers: [
+            {
+              urls: "turn:relay1.expressturn.com:3478",
+              credential: "GaXEw5Xsbyz6NVmY",
+              username: "ef4JRLGBMUMREQ4FTQ",
+            },
+          ],
+        },
+      });
+      console.log("this.peer in super", this.peer);
     });
-    console.log("this.peer in super", this.peer);
 
     // In case we need a pop of sound
     this.keypressFeedbackSound =
