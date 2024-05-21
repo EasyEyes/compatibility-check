@@ -52,8 +52,7 @@ class P {
 
   encodeBase62 = (num) => {
     const base = 62;
-    const characters =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const characters = "0123456789abcdefghijklmnopqrstuvwxyz";
     let result = "";
     while (num > 0) {
       result = characters[num % base] + result;
