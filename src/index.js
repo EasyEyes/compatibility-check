@@ -28,18 +28,6 @@ class P {
     this.pressFeedback = new Audio(this.keypressFeedbackSound);
   }
 
-  encodeBase62 = (num) => {
-    const base = 62;
-    const characters =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let result = "";
-    while (num > 0) {
-      result = characters[num % base] + result;
-      num = Math.floor(num / base);
-    }
-    return result;
-  };
-
   generateTimeBasedPeerID = async () => {
     const now = new Date().getTime();
     const randomBuffer = new Uint8Array(10);
@@ -57,7 +45,19 @@ class P {
       .join("");
     const shortHash = hashString.substring(0, 12); // Use more of the hash for a longer ID
     //   return shortHash; // Consider converting this to Base62
-    return encodeBase62(parseInt(shortHash, 16));
+    return this.encodeBase62(parseInt(shortHash, 16));
+  };
+
+  encodeBase62 = (num) => {
+    const base = 62;
+    const characters =
+      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    while (num > 0) {
+      result = characters[num % base] + result;
+      num = Math.floor(num / base);
+    }
+    return result;
   };
 
   onPeerDisconnected = () => {
