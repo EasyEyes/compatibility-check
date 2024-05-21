@@ -160,7 +160,7 @@ export class ExperimentPeer extends P {
     // });
 
     return new Promise(async (resolve) => {
-      super();
+      await super();
       console.log("This peer in ExperimentPeer constructor", this.peer);
       this.text = text;
       this.onOpen = (id) => {
