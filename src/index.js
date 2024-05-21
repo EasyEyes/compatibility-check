@@ -2,8 +2,7 @@ import Peer from "peerjs";
 class P {
   constructor() {
     // this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
-    this.compatabilityCheckEndpointURL =
-      "https://easyeyes.github.io/compatibility-check/index.html?";
+    this.compatabilityCheckEndpointURL = "https://peer.easyeyes.app?";
     this.conn = null;
     this.lastPeerId = null;
 
@@ -108,7 +107,7 @@ export class ExperimentPeer extends P {
       this.lastPeerId = this.peer.id;
     }
 
-    const params = { peerID: this.peer.id };
+    const params = { peer: this.peer.id };
 
     let queryString = this.queryStringFromObject(params);
     const uri = this.compatabilityCheckEndpointURL + queryString;
