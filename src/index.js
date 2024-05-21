@@ -292,16 +292,19 @@ export class PhonePeer extends P {
     );
     console.log("receiverPeerId", this.receiverPeerId);
 
+    this.onErrorInput = onError;
+
+    this.#showConnectingMessage();
+  }
+
+  init = async () => {
+    await this.initializePeer();
     this.peer.on("open", this.#onPeerOpen);
     this.peer.on("connection", this.#disallowIncomingConnections);
     this.peer.on("disconnected", this.onPeerDisconnected);
     this.peer.on("close", this.onPeerClose);
     this.peer.on("error", this.onError);
-
-    this.onErrorInput = onError;
-
-    this.#showConnectingMessage();
-  }
+  };
 
   onError = (err) => {
     this.onPeerError(err);
