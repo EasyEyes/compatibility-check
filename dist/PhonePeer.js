@@ -14,4 +14,6 @@ const pp = new EasyEyesPeer.PhonePeer({
     location.reload();
   },
 });
+
+await pp.init();
 console.log("!. ~ file: index.html:24 ~ pp:", pp);
