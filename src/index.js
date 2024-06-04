@@ -15,34 +15,26 @@ class P {
   initializePeer = async () => {
     /* Create the Peer object for our end of the connection. */
     const id = await this.generateTimeBasedPeerID();
+    // Calling the REST API TO fetch the TURN Server Credentials
+    try {
+      const response = await fetch(
+        "https://easyeyesturnserver.metered.live/api/v1/turn/credentials?apiKey=89748a8d1f1c5b856fad69cc65165f34bdae"
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error fetching TURN server credentials", error);
+      alert("Error fetching TURN server credentials. Please try again.");
+    }
+
+    // Saving the response in the iceServers array
+    const iceServers = await response.json();
+
     this.peer = new Peer(id, {
       debug: 2,
       config: {
-        iceServers: [
-          {
-            urls: "stun:stun.relay.metered.ca:80",
-          },
-          {
-            urls: "turn:global.relay.metered.ca:80",
-            username: "de884cfc34189cdf1a5dd616",
-            credential: "IcOpouU9/TYBmpHU",
-          },
-          {
-            urls: "turn:global.relay.metered.ca:80?transport=tcp",
-            username: "de884cfc34189cdf1a5dd616",
-            credential: "IcOpouU9/TYBmpHU",
-          },
-          {
-            urls: "turn:global.relay.metered.ca:443",
-            username: "de884cfc34189cdf1a5dd616",
-            credential: "IcOpouU9/TYBmpHU",
-          },
-          {
-            urls: "turns:global.relay.metered.ca:443?transport=tcp",
-            username: "de884cfc34189cdf1a5dd616",
-            credential: "IcOpouU9/TYBmpHU",
-          },
-        ],
+        iceServers: iceServers,
       },
     });
     console.log("this.peer in super", this.peer);
