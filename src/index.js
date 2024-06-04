@@ -34,6 +34,7 @@ class P {
         },
       });
       console.log("this.peer in super", this.peer);
+      console.log("iceServers", iceServers);
     } catch (error) {
       console.error("Error fetching TURN server credentials", error);
       alert("Error fetching TURN server credentials. Please try again.");
