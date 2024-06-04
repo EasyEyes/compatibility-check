@@ -23,21 +23,21 @@ class P {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      // Saving the response in the iceServers array
+      const iceServers = await response.json();
+
+      this.peer = new Peer(id, {
+        debug: 2,
+        config: {
+          iceServers: iceServers,
+        },
+      });
+      console.log("this.peer in super", this.peer);
     } catch (error) {
       console.error("Error fetching TURN server credentials", error);
       alert("Error fetching TURN server credentials. Please try again.");
     }
-
-    // Saving the response in the iceServers array
-    const iceServers = await response.json();
-
-    this.peer = new Peer(id, {
-      debug: 2,
-      config: {
-        iceServers: iceServers,
-      },
-    });
-    console.log("this.peer in super", this.peer);
   };
 
   generateTimeBasedPeerID = async () => {
