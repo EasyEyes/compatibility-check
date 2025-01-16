@@ -12,33 +12,9 @@ const config = {
       name: "EasyEyesPeer",
       type: "umd",
     },
-    globalObject: "this",
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              [
-                "@babel/preset-env",
-                {
-                  // Transpile down to at least iOS 11
-                  targets: {
-                    ios: "11",
-                  },
-                  // If you need async/await, you may need extra config
-                  useBuiltIns: "usage",
-                  corejs: 3,
-                },
-              ],
-            ],
-          },
-        },
-      },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
