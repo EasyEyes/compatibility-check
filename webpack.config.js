@@ -12,6 +12,7 @@ const config = {
       name: "EasyEyesPeer",
       type: "umd",
     },
+    globalObject: "this",
   },
   module: {
     rules: [

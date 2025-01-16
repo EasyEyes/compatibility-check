@@ -15,7 +15,7 @@
 		exports["EasyEyesPeer"] = factory();
 	else
 		root["EasyEyesPeer"] = factory();
-})(self, () => {
+})(this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
