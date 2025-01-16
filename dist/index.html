@@ -7,7 +7,7 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script type="module" src="main.js"></script>
+    <script src="main.js"></script>
 
     <!-- The rest of your head content -->
     <meta
@@ -38,7 +38,7 @@
       );
 
       try {
-        const pp = new PhonePeer({
+        const pp = new EasyEyesPeer.PhonePeer({
           onError: (err) => {
             console.log(err);
             alert(
