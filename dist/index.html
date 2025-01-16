@@ -7,8 +7,6 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="main.js"></script>
-
     <!-- The rest of your head content -->
     <meta
       http-equiv="Delegate-CH"
@@ -19,40 +17,42 @@
     />
   </head>
 
-  <body></body>
+  <body>
+    <script
+      defer
+      crossorigin
+      src="https://cloud.51degrees.com/api/v4/AQSjtocC5XcfFwKc20g.js"
+    ></script>
 
-  <!-- 51Degrees script (make sure it is supported on iOS 11 or polyfilled) -->
-  <script
-    crossorigin
-    src="https://cloud.51degrees.com/api/v4/AQSjtocC5XcfFwKc20g.js"
-  ></script>
+    <script defer src="main.js"></script>
 
-  <script>
-    (async function () {
-      console.log(
-        `
-        Welcome to the compatibility check endpoint.
-        This page will be accessed from the participant's phone, by way of scanning
-        a QR code from the experiment Needs page.
-        `
-      );
+    <script defer>
+      (async function () {
+        console.log(
+          `
+      Welcome to the compatibility check endpoint.
+      This page will be accessed from the participant's phone, by way of scanning
+      a QR code from the experiment Needs page.
+      `
+        );
 
-      try {
-        const pp = new EasyEyesPeer.PhonePeer({
-          onError: (err) => {
-            console.log(err);
-            alert(
-              "An error occurred. Please press the button below to refresh."
-            );
-            location.reload();
-          },
-        });
+        try {
+          const pp = new EasyEyesPeer.PhonePeer({
+            onError: (err) => {
+              console.log(err);
+              alert(
+                "An error occurred. Please press the button below to refresh."
+              );
+              location.reload();
+            },
+          });
 
-        await pp.init();
-        console.log("!. ~ file: index.html:24 ~ pp:", pp);
-      } catch (error) {
-        console.error("Failed to initialize PhonePeer:", error);
-      }
-    })();
-  </script>
+          await pp.init();
+          console.log("!. ~ file: index.html:24 ~ pp:", pp);
+        } catch (error) {
+          console.error("Failed to initialize PhonePeer:", error);
+        }
+      })();
+    </script>
+  </body>
 </html>
