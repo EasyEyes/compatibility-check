@@ -1,4 +1,5 @@
 import Peer from "peerjs";
+import platform from "platform";
 class P {
   constructor() {
     // this.compatabilityCheckEndpointURL = "https://cdn.jsdelivr.net/gh/EasyEyes/compatibility-check/";
@@ -329,6 +330,21 @@ export class PhonePeer extends P {
     this.onErrorInput?.(err);
   };
 
+  identifyBrowser = async () => {
+    try {
+      const browserInfo = {
+        browser: platform.name,
+        browserVersion: platform.version,
+        os: platform.os?.family,
+        osVersion: platform.os?.version,
+      };
+      return browserInfo;
+    } catch (error) {
+      console.error("Error identifying browser:", error);
+      return null;
+    }
+  };
+
   identifyDevice = async () => {
     try {
       const deviceInfo = {};
@@ -347,12 +363,14 @@ export class PhonePeer extends P {
       });
       return deviceInfo;
     } catch (error) {
+      //51 degrees failed.
       console.error("Error fetching or executing script:", error.message);
       return null;
     }
   };
   doStuff = async () => {
     const deviceDetails = await this.identifyDevice();
+    const browserDetails = await this.identifyBrowser();
     const webAudioDeviceNames = { microphone: "" };
     const screenSizes = {
       width: screen.width,
@@ -362,6 +380,7 @@ export class PhonePeer extends P {
       deviceDetails: deviceDetails,
       webAudioDeviceNames: webAudioDeviceNames,
       screenSizes: screenSizes,
+      browserDetails: browserDetails,
     };
     this.conn.send({
       message: "Results",
