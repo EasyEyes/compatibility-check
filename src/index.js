@@ -367,10 +367,30 @@ export class PhonePeer extends P {
   };
 
   testNeededAPIs = async () => {
-    const neededAPIs = ["getUserMedia"];
-    const result = {};
+    //needed APIs: getUserMedia (audio),
+    const result = {
+      getUserMedia: false,
+      getUserMediaError: null,
+    };
 
-    // TODO: check if the browser supports the needed APIs
+    try {
+      const contraints = {
+        autoGainControl: false,
+        noiseSuppression: false,
+        echoCancellation: false,
+        channelCount: 1,
+      };
+      //check if getUserMedia is supported
+      await navigator.mediaDevices.getUserMedia({
+        audio: contraints,
+      });
+      result.getUserMedia = true;
+    } catch (err) {
+      result.getUserMedia = false;
+      result.getUserMediaError = err.message;
+    }
+
+    return result;
   };
 
   doStuff = async (t) => {
@@ -416,6 +436,8 @@ export class PhonePeer extends P {
       },
     }));
 
+    const neededAPIs = await this.testNeededAPIs();
+
     // Run promises independently
     const [deviceResult, browserResult] = await Promise.all([
       devicePromise,
@@ -439,6 +461,7 @@ export class PhonePeer extends P {
         data: browserResult.result,
         error: browserResult.error,
       },
+      neededAPIs: neededAPIs,
     };
 
     this.conn.send({
