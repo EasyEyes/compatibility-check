@@ -197,11 +197,11 @@ export class ExperimentPeer extends P {
         }, time);
       });
     };
-    const qrImage = new Image(400, 400);
+    const qrImage = new Image();
     qrImage.setAttribute("id", "compatibilityCheckQRImage");
     qrImage.style.zIndex = Infinity;
-    qrImage.style.width = 400;
-    qrImage.style.height = 400;
+    qrImage.style.minWidth = 400;
+    qrImage.style.minHeight = 400;
     qrImage.style.aspectRatio = 1;
     while (!this.qrURI) {
       await waitALittle(10);
