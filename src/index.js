@@ -112,6 +112,7 @@ export class ExperimentPeer extends P {
     onError,
     text,
     timeout,
+    onErrorInputForPhone = false,
   }) {
     super();
     this.text = text;
@@ -130,6 +131,12 @@ export class ExperimentPeer extends P {
       // Tell the phone to initiate running the payload code
       this.conn.send({ message: "Text", text: this.text });
       this.conn.send({ message: "Begin", timeout: this.timeout });
+      if (onErrorInputForPhone) {
+        this.conn.send({
+          message: "UpdateErrorMessage",
+          onErrorInput: onErrorInputForPhone,
+        });
+      }
       onHandshake?.();
     };
     // Set this.conn, our connection with the phone peer
@@ -495,6 +502,13 @@ export class PhonePeer extends P {
     switch (data.message) {
       case "Begin":
         this.doStuff(data.timeout);
+        break;
+      case "UpdateErrorMessage":
+        try {
+          this.onErrorInput = data.onErrorInput;
+        } catch (err) {
+          console.log("Error updating error message: ", err);
+        }
         break;
       case "Text":
         this.text = data.text;
