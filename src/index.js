@@ -18,6 +18,9 @@ class P {
     const id = await this.generateTimeBasedPeerID();
     this.peer = new Peer(id, {
       debug: 2,
+      host: "easyeyes-peer-server.herokuapp.com",
+      port: 443,
+      secure: true,
       config: {
         iceServers: [
           {
@@ -70,14 +73,15 @@ class P {
   };
 
   encodeBase62 = (num) => {
-    const base = 36;
-    const characters = "0123456789abcdefghijklmnopqrstuvwxyz";
+    const base = 26;
+    const characters = "abcdefghijklmnopqrstuvwxyz";
     let result = "";
     while (num > 0) {
       result = characters[num % base] + result;
       num = Math.floor(num / base);
     }
-    return result;
+
+    return result || "a";
   };
 
   onPeerDisconnected = () => {
