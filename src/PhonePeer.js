@@ -25,7 +25,11 @@ async function main() {
     },
   });
 
-  await pp.init();
+  if (window.phoneApp) {
+    window.phoneApp.registerSubmodule(pp);
+  } else {
+    console.log("PhoneApp not found");
+  }
   console.log("!. ~ file: index.html:24 ~ pp:", pp);
 }
 
