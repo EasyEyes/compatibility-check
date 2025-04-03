@@ -8,7 +8,7 @@ export class ExperimentPeer {
    * @param {Function} params.onResults   - optional callback after the phone sends results
    * @param {String}   params.text        - text to show on phone
    * @param {Number}   params.timeout     - how long to allow phone to do the checks
-   * @param {Boolean}  params.onErrorInputForPhone - if you want to pass an “UpdateErrorMessage” object
+   * @param {Boolean}  params.onErrorInputForPhone - if you want to pass an "UpdateErrorMessage" object
    */
   constructor({
     onData,
@@ -27,7 +27,7 @@ export class ExperimentPeer {
     this.timeout = timeout || 20; // seconds
     this.onErrorInputForPhone = onErrorInputForPhone;
 
-    // We’ll use a Promise to resolve the final results from the phone
+    // We'll use a Promise to resolve the final results from the phone
     this._resultsPromise = null;
     this._resolveResults = null;
   }
@@ -84,10 +84,37 @@ export class ExperimentPeer {
   }
 
   /**
-   * a promise that resolves when the phone
-   * eventually sends the “Results” message, call this:
+   * Sends the Begin command to start compatibility checks and returns a promise
+   * that resolves with the results when complete
    *
-   * @returns {Promise<any>} resolves with the phone’s results object
+   * @param {CentralConnectionManager} manager - The connection manager instance
+   * @returns {Promise<any>} Promise that resolves with the test results
+   */
+  beginChecksAndGetResults(manager) {
+    if (!manager) {
+      throw new Error("Connection manager is required to begin checks");
+    }
+
+    // Reset results promise if needed
+    this._resultsPromise = null;
+
+    // Send the begin command to start the tests
+    manager.send({
+      message: "Begin",
+      timeout: this.timeout,
+      name: this.name,
+    });
+    manager.send({ message: "Text", text: this.text, name: this.name });
+
+    // Return the promise that will resolve with results
+    return this.getResults();
+  }
+
+  /**
+   * a promise that resolves when the phone
+   * eventually sends the "Results" message, call this:
+   *
+   * @returns {Promise<any>} resolves with the phone's results object
    */
   getResults() {
     if (!this._resultsPromise) {
