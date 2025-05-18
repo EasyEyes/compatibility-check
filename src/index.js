@@ -182,10 +182,19 @@ export class PhonePeer {
         channelCount: 1,
       };
       //check if getUserMedia is supported
-      await navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         audio: constraints,
       });
-      result.getUserMedia = true;
+      if (stream) {
+        result.getUserMedia = true;
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const mics = devices.filter((device) => device.kind === "audioinput");
+        const micLabels = mics.map((mic) => mic.label);
+        result.micLabels = micLabels;
+      } else {
+        result.getUserMedia = false;
+        result.getUserMediaError = "getUserMedia not supported";
+      }
     } catch (err) {
       result.getUserMedia = false;
       result.getUserMediaError = err.message;
